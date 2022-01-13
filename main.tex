@@ -3,6 +3,9 @@
 \documentclass[british,conference]{IEEEtran}
 \usepackage[T1]{fontenc}
 \usepackage[latin9]{inputenc}
+\usepackage{babel}
+\usepackage[unicode=true]
+ {hyperref}
 
 \makeatletter
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
@@ -10,12 +13,12 @@
 
 \makeatother
 
-\usepackage{babel}
 \usepackage{listings}
+\lstset{basicstyle={\ttfamily}}
 \renewcommand{\lstlistingname}{Listing}
 
 \begin{document}
-\title{Acoustic scene awareness in realistic environments}
+\title{A template for minireports}
 \author{Alastair H. Moore}
 
 \maketitle
@@ -29,17 +32,24 @@
 
 The purpose of this template is to give writers a starting point for
 making a nice-looking document which is consistent across reports.
-It was created in LyX, which give a word processor interface. But
-the is a plain LaTeX version available too. If using LyX on mac you
-wish to note the following
+It was created in LyX, which gives a word processor interface. But
+the is a plain LaTeX version available too which was generated from
+the lyx file. If using LyX on mac you may wish to note the following
 \begin{itemize}
-\item The UI doesn't work well with dark mode
 \item You can install using homebrew with 
 \begin{lstlisting}
 brew install --cask lyx
 \end{lstlisting}
-\item You can insert pure latex using ``evil red text'' by pressing command+L
+ It will appear in your Applications folder. You may need to right
+click->Open it the first time you run it.
+\item The UI doesn't work well with dark mode - in LyX go to LyX -> Preferences...
+-> Look \& Feel -> Colors and uncheck ``use system colors''. Also
+turn off dark mode Apple menu -> System Preferences -> General ->
+Appearance -> Light.
 \end{itemize}
+The UI has buttons for most common formatting operations. You can
+insert pure latex using ``evil red text'' by pressing cmd+L.
+
 The template has Mike's acronym macros already defined. Standard acronyms
 are in sapacronyms.txt and additional acronyms can be defined by editing
 that file, or simply adding them to the list at the top of this document.
@@ -67,58 +77,14 @@ to the source signals, $\sigsrct_{\idmic}(\idtime)$, according to
 
 where...
 
-\section{Challenges}
-
-After \cite{Zohourian2015}, we will assume the availability of estimated
-head movement data from an \ac{IMU}. This does not remove the problems
-associated with non-stationarity. Rather it provides an additional
-imperfect source of information which can inform our processing in
-order to account for it. We believe that the incorporation of an \ac{IMU}
-into hearing aids is a realistic assumption since such devices are
-mass produced for modern smart phones. We plan to postpone tackling
-point 4 until later in the project, noting that one possible line
-of enquiry would be to follow an iterative approach as proposed in
-\cite{Romigh2012}. 
-
-The remainder of this report considers the difficulties in estimating
-multiple dynamic source directions relative to a moving listener in
-reverberant environments using typical approaches to \ac{DOA} estimation
-before proposing a research direction for the following 6 months.
-
-\section{\acs{DOA} estimation from estimated \acs{RTF}}
-
-To mitigate the effect of reverberation, it has been proposed to
-estimate \ac{TDOA} from estimates of either the \acp{ATF} \cite{Kowalczyk2013}
-or the \ac{RTF}, with the latter being a more robust approach. The
-\ac{TOA} of the first peak in the \ac{RTF} is then the \ac{TDOA}
-with respect to the reference channel. This approach is promising
-and \ac{RTF} estimation is an active area of research \cite{Cohen2004a,Markovich2009,Taseska2015}.
-However, current techniques assume that sources and receivers are
-fixed or move only very slowly and so would not adapt quickly enough
-to the rapid changes expected due to head movement.  Estimation of
-the \ac{RTF} when multiple sources are simultaneously active is also
-an unsolved problem.
-
-\section{\acs{DOA} estimation using \acs{SRP}}
-
-The idea of pointing a beamformer in all possible source directions
-and selecting those that lead to the largest output as the \acp{DOA}
-is old but remains popular due to its inherent robustness and its
-ability to identify multiple \acp{DOA}. However, the spatial selectivity
-is generally lower than other methods and depends on the choice of
-beamformer. The \ac{MVDR} beamformer is the theoretically optimal
-choice, since it adjusts the beampattern to reject background noise
-based on the noise covariance matrix. With the steering vector set
-to the anechoic \ac{ATF} for a planewave in the look direction, the
-beamformer gain for the direct path is unity. However, in reverberation,
-coherent reflections can lead to cancellation of the desired source
-due to negative lobes directed towards the reflections. To avoid such
-cancelation requires the steering vector to be the \ac{ATF} of the
-desired source, which is generally unknown, or the \ac{RTF}, which
-may be estimated, as discussed above.
-
 \section{Next steps}
-
+\begin{itemize}
+\item Edit your document
+\item To View the output do cmd+r or to export as pdf do File->Export->PDF
+(pdflatex)
+\item If you want to automatically create the pdf whenever you view then
+have a look at \href{https://tex.stackexchange.com/questions/89561/shortcut-for-export-pdf-on-lyx}{this stack exchange answer}.
+\end{itemize}
 \bibliographystyle{IEEEtran}
 \bibliography{sapstrings,sapref,local}
 

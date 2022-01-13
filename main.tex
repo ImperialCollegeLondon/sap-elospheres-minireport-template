@@ -1,0 +1,125 @@
+%% LyX 2.3.6.2 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[british,conference]{IEEEtran}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\input{preamble}
+
+\makeatother
+
+\usepackage{babel}
+\usepackage{listings}
+\renewcommand{\lstlistingname}{Listing}
+
+\begin{document}
+\title{Acoustic scene awareness in realistic environments}
+\author{Alastair H. Moore}
+
+\maketitle
+\acronymnolist{sapacronyms.txt}
+\acro{ELOSPHERES}{ELOSPHERES}
+\acro{ATF}{Acoustic Transfer Function}
+\acro{RTF}{Relative Transfer Function}
+\acro{HRTF}{Head-Related Transfer Function}
+
+\section{Introduction\label{sec:intro}}
+
+The purpose of this template is to give writers a starting point for
+making a nice-looking document which is consistent across reports.
+It was created in LyX, which give a word processor interface. But
+the is a plain LaTeX version available too. If using LyX on mac you
+wish to note the following
+\begin{itemize}
+\item The UI doesn't work well with dark mode
+\item You can install using homebrew with 
+\begin{lstlisting}
+brew install --cask lyx
+\end{lstlisting}
+\item You can insert pure latex using ``evil red text'' by pressing command+L
+\end{itemize}
+The template has Mike's acronym macros already defined. Standard acronyms
+are in sapacronyms.txt and additional acronyms can be defined by editing
+that file, or simply adding them to the list at the top of this document.
+So using some ERT we can define the acronym for \ac{RTF} on its first
+use, after which it will appear as \ac{RTF}.
+
+Maths is entered using the equation editor which allows you type latex
+maths commands which it will typeset on-the-fly.
+
+Non-printing notes can be added using the ``Insert LyX note'' button,
+which looks like a post-it note.
+
+Citations such as \cite{Zohourian2015,Knapp1976} are nicely handled.
+Bib file sources are defined by clicking on the 'BibTeX Generated
+Bibliography' button at the bottom of this document and add the paths
+to local sources. 
+
+\section{Some maths}
+
+The microphone signals, $\sigmict_{\idmic}(\idtime)$, are related
+to the source signals, $\sigsrct_{\idmic}(\idtime)$, according to
+\begin{eqnarray*}
+\sigmict_{\idmic}(\idtime) & = & \sum_{\idsrc=1}^{\numsrc}\left(\airt_{\idmic,\idsrc}(\idtime)\ast\sigsrct_{\idsrc}(\idtime)\right)+\signoiset_{\idmic}(\idtime)
+\end{eqnarray*}
+
+where...
+
+\section{Challenges}
+
+After \cite{Zohourian2015}, we will assume the availability of estimated
+head movement data from an \ac{IMU}. This does not remove the problems
+associated with non-stationarity. Rather it provides an additional
+imperfect source of information which can inform our processing in
+order to account for it. We believe that the incorporation of an \ac{IMU}
+into hearing aids is a realistic assumption since such devices are
+mass produced for modern smart phones. We plan to postpone tackling
+point 4 until later in the project, noting that one possible line
+of enquiry would be to follow an iterative approach as proposed in
+\cite{Romigh2012}. 
+
+The remainder of this report considers the difficulties in estimating
+multiple dynamic source directions relative to a moving listener in
+reverberant environments using typical approaches to \ac{DOA} estimation
+before proposing a research direction for the following 6 months.
+
+\section{\acs{DOA} estimation from estimated \acs{RTF}}
+
+To mitigate the effect of reverberation, it has been proposed to
+estimate \ac{TDOA} from estimates of either the \acp{ATF} \cite{Kowalczyk2013}
+or the \ac{RTF}, with the latter being a more robust approach. The
+\ac{TOA} of the first peak in the \ac{RTF} is then the \ac{TDOA}
+with respect to the reference channel. This approach is promising
+and \ac{RTF} estimation is an active area of research \cite{Cohen2004a,Markovich2009,Taseska2015}.
+However, current techniques assume that sources and receivers are
+fixed or move only very slowly and so would not adapt quickly enough
+to the rapid changes expected due to head movement.  Estimation of
+the \ac{RTF} when multiple sources are simultaneously active is also
+an unsolved problem.
+
+\section{\acs{DOA} estimation using \acs{SRP}}
+
+The idea of pointing a beamformer in all possible source directions
+and selecting those that lead to the largest output as the \acp{DOA}
+is old but remains popular due to its inherent robustness and its
+ability to identify multiple \acp{DOA}. However, the spatial selectivity
+is generally lower than other methods and depends on the choice of
+beamformer. The \ac{MVDR} beamformer is the theoretically optimal
+choice, since it adjusts the beampattern to reject background noise
+based on the noise covariance matrix. With the steering vector set
+to the anechoic \ac{ATF} for a planewave in the look direction, the
+beamformer gain for the direct path is unity. However, in reverberation,
+coherent reflections can lead to cancellation of the desired source
+due to negative lobes directed towards the reflections. To avoid such
+cancelation requires the steering vector to be the \ac{ATF} of the
+desired source, which is generally unknown, or the \ac{RTF}, which
+may be estimated, as discussed above.
+
+\section{Next steps}
+
+\bibliographystyle{IEEEtran}
+\bibliography{sapstrings,sapref,local}
+
+\end{document}
